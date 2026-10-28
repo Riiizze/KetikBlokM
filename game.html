@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#202b32">
+  <title>Ketik Blok M — Adu Cepat di Jakarta Selatan</title>
+  <link rel="stylesheet" href="game.css">
+</head>
+<body>
+  <div class="game-area">
+    <img id="player" src="assets/Karakter2.png" width="128" height="128" alt="">
+    <img id="enemy" src="assets/enemy1.png" width="32" height="32" alt="" hidden>
+    <div id="word" hidden></div>
+  </div>
+  <p id="game-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
+
+  <main id="menu" class="screen">
+    <div class="menu-card">
+      <span class="eyebrow location-tag">JAKARTA SELATAN / ARCADE MENGETIK</span>
+      <h1 translate="no">Ketik<span>Blok M<span class="title-dot">.</span></span></h1>
+      <p class="description">Dari kopi susu sampai Pasar Raya.<br>Adu cepat mengetik, jaga burungmu, dan taklukkan Blok M!</p>
+      <div class="district-tags" aria-label="Kawasan"><span>Melawai</span><span>Bulungan</span><span>Mahakam</span></div>
+      <div class="record"><span>REKOR PRIBADI</span><strong><span id="best-score">0</span> <small>kata</small></strong></div>
+      <button id="start-button" class="primary" type="button">Gas, mulai main <span aria-hidden="true">→</span></button>
+      <details class="instructions">
+        <summary>Cara bermain</summary>
+        <ol>
+          <li>Ketik persis seperti teks di atas predator, termasuk huruf besar, huruf kecil, dan spasi.</li>
+          <li>Huruf hijau berarti cocok. Huruf merah bergaris bawah berarti salah; perbaiki dengan Backspace. Tanda + menunjukkan karakter berlebih.</li>
+          <li>Setiap kata yang benar menambah satu poin.</li>
+          <li>Jaga 3 nyawamu dan raih skor setinggi mungkin!</li>
+          <li>Di ponsel, ketuk kolom ketik untuk membuka keyboard. Suara dan animasi juga bisa diatur lewat Pause.</li>
+          <li>Mulai skor 10, frasa dua kata lebih sering muncul dan elang bergerak lebih cepat.</li>
+        </ol>
+      </details>
+      <button class="secondary motion-toggle" type="button" aria-pressed="false">Animasi: nonaktif</button>
+      <button class="secondary mute-toggle" type="button" aria-pressed="false">Mute suara</button>
+      <p class="menu-footnote">1 PEMAIN <span aria-hidden="true">✦</span> KATA-KATA DARI SUDUT JAKSEL</p>
+    </div>
+    <aside class="neighborhood-sign" aria-label="Kawasan permainan Blok M">
+      <span class="sign-caption">KAWASAN / 01</span>
+      <strong translate="no">BLOK M<span aria-hidden="true">↗</span></strong>
+      <span class="sign-address">KEBAYORAN BARU · JAKARTA SELATAN</span>
+      <p>Kopi di sudut jalan.<br>Cerita di setiap ketikan.</p>
+      <div class="sign-stripes" aria-hidden="true"></div>
+    </aside>
+  </main>
+
+  <section id="game-ui" class="game-ui" aria-label="Permainan" hidden>
+    <header class="hud">
+      <div class="hud-controls" role="group" aria-label="Kontrol permainan">
+        <button id="menu-button" class="secondary" type="button">← Menu</button>
+        <button id="pause-button" class="secondary" type="button" aria-keyshortcuts="Escape">Pause</button>
+        <button class="secondary mute-toggle" type="button" aria-pressed="false">Mute suara</button>
+        <button class="secondary motion-toggle" type="button" aria-pressed="false">Animasi: nonaktif</button>
+      </div>
+      <div class="stats"><span>KATA <strong id="score">0</strong></span><span>NYAWA <strong id="hp">3</strong></span></div>
+    </header>
+    <div class="input-container">
+      <label for="input">Ketik persis sesuai bubble, termasuk huruf kapital</label>
+      <input type="text" id="input" name="typed-word" aria-describedby="word" placeholder="Ketuk untuk mengetik…" inputmode="text" enterkeyhint="done" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" disabled>
+      <p class="stage-info"><strong id="stage-label">Tahap 1 · Pemanasan</strong><span id="stage-hint">Lebih banyak satu kata · Tantangan naik di skor 10</span></p>
+    </div>
+  </section>
+
+  <section id="result" class="screen" aria-labelledby="result-title" hidden>
+    <div class="result-card">
+      <span class="eyebrow">KETIK BLOK M / HASIL MAIN</span>
+      <h2 id="result-title">Rehat sebentar,<br>gas lagi nanti!</h2>
+      <p>Kamu berhasil mengetik</p>
+      <strong id="final-score" class="final-score">0</strong>
+      <p id="result-message" aria-live="polite"></p>
+      <button id="retry-button" class="primary" type="button">Main lagi <span aria-hidden="true">↻</span></button>
+      <button id="home-button" class="secondary" type="button">Kembali ke menu</button>
+      <button class="secondary mute-toggle" type="button" aria-pressed="false">Mute suara</button>
+    </div>
+  </section>
+  <dialog id="pause-dialog" aria-labelledby="pause-title" aria-describedby="pause-description">
+    <span class="eyebrow">KETIK BLOK M / REHAT DULU</span>
+    <h2 id="pause-title">Permainan dijeda</h2>
+    <p id="pause-description">Burungmu aman. Lanjutkan saat kamu siap!</p>
+    <p class="pause-stats">Skor <strong id="pause-score">0</strong> · Nyawa <strong id="pause-hp">3</strong></p>
+    <button id="resume-button" class="primary" type="button" autofocus>Lanjut bermain <span aria-hidden="true">→</span></button>
+    <div class="pause-actions">
+      <button class="secondary mute-toggle" type="button" aria-pressed="false">Mute suara</button>
+      <button class="secondary motion-toggle" type="button" aria-pressed="false">Animasi: nonaktif</button>
+      <button id="pause-home-button" class="secondary" type="button">Kembali ke menu</button>
+    </div>
+    <p class="pause-hint">Tekan Esc untuk lanjut</p>
+  </dialog>
+  <script src="game.js"></script>
+</body>
+</html>
